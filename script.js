@@ -13,34 +13,34 @@ $(document).ready(function () {
       // Ocultamos los elementos del sobre
       $('.valentines-day .heart, .valentines-day .text, .valentines-day .front').hide();
 
-      // Mostramos la carta centrada con animación suave
       const $card = $('#card');
+
+      // Mostramos la carta centrada y frontal
       $card.css({
         visibility: 'visible',
         opacity: 0,
-        transform: 'scale(0.8) translate(-50%, -50%)',
         position: 'absolute',
         top: '50%',
         left: '50%',
-        'transform-origin': 'center center'
+        transform: 'translate(-50%, -50%) scale(0.8) rotateY(0deg)',
+        'transform-origin': 'center center',
+        perspective: '1000px'
       });
 
-      // Animación suave usando jQuery animate + CSS transitions
+      // Animación suave con rebote
       $card.animate({ opacity: 1 }, {
         duration: 1200,
         step: function (now) {
-          // Aplicamos una escala más natural tipo “zoom suave”
           const scale = 0.8 + (now * 0.2);
-          $(this).css('transform', `scale(${scale}) translate(-50%, -50%)`);
+          $(this).css('transform', `translate(-50%, -50%) scale(${scale}) rotateY(0deg)`);
         },
         complete: function () {
-          // Al final, aplicamos un ligero rebote muy sutil
           $(this).css({
             transition: 'transform 0.3s ease-out',
-            transform: 'scale(1.03) translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%) scale(1.03) rotateY(0deg)'
           });
           setTimeout(() => {
-            $(this).css('transform', 'scale(1) translate(-50%, -50%)');
+            $(this).css('transform', 'translate(-50%, -50%) scale(1) rotateY(0deg)');
           }, 300);
         }
       });
