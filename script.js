@@ -1,64 +1,49 @@
-$(document).ready(function() {
-  // Ocultamos las cortinas al iniciar (si existen)
+$(document).ready(function () {
+  // Ocultamos las cortinas al cargar
   $('.left-curtain, .right-curtain').css('width', '0%');
 
-  // Función para mostrar la carta con animación
-  function mostrarCarta() {
-    // Evitamos múltiples clics / toques
-    if ($('#card').css('visibility') === 'visible') return;
-
-    // Animación del sobre
+  $('.valentines-day').click(function () {
+    // Animación del sobre cayendo
     $('.envelope').css({
-      'animation': 'fall 2.5s linear 1',
-      '-webkit-animation': 'fall 2.5s linear 1'
+      animation: 'fall 3s linear 1',
+      '-webkit-animation': 'fall 3s linear 1'
     });
 
-    // Efecto de desvanecimiento (fade)
-    $('.envelope').fadeOut(800, function() {
-      // Oculta los elementos del sobre
-      $('.valentines-day .heart, .valentines-day .text, .valentines-day .front').fadeOut(400);
+    $('.envelope').fadeOut(800, function () {
+      // Ocultamos los elementos del sobre
+      $('.valentines-day .heart, .valentines-day .text, .valentines-day .front').hide();
 
-      // Muestra la carta
-  $('#card')
-  .css({
-    'visibility': 'visible',
-    'opacity': 0,
-    'transform': 'translate(-50%, -50%) scale(0.8)' // 👈 añade el translate aquí
-  })
-  .animate(
-    { opacity: 1 },
-    {
-      duration: 800,
-      step: function(now) {
-        const scale = 0.8 + now * 0.2;
-        $(this).css('transform', 'translate(-50%, -50%) scale(' + scale + ')');
-      }
-    }
-  );
+      // Mostramos la carta centrada con animación suave
+      const $card = $('#card');
+      $card.css({
+        visibility: 'visible',
+        opacity: 0,
+        transform: 'scale(0.8) translate(-50%, -50%)',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        'transform-origin': 'center center'
+      });
+
+      // Animación suave usando jQuery animate + CSS transitions
+      $card.animate({ opacity: 1 }, {
+        duration: 1200,
+        step: function (now) {
+          // Aplicamos una escala más natural tipo “zoom suave”
+          const scale = 0.8 + (now * 0.2);
+          $(this).css('transform', `scale(${scale}) translate(-50%, -50%)`);
+        },
+        complete: function () {
+          // Al final, aplicamos un ligero rebote muy sutil
+          $(this).css({
+            transition: 'transform 0.3s ease-out',
+            transform: 'scale(1.03) translate(-50%, -50%)'
+          });
+          setTimeout(() => {
+            $(this).css('transform', 'scale(1) translate(-50%, -50%)');
+          }, 300);
+        }
+      });
     });
-  }
-
-  // Permitir interacción tanto con clic como con toque táctil
-  $('.valentines-day').on('click touchstart', function(e) {
-    e.preventDefault(); // evita doble disparo
-    mostrarCarta();
-  });
-
-  // Si el usuario gira el dispositivo o cambia tamaño, centramos todo
-  $(window).on('resize orientationchange', function() {
-    const vh = $(window).height();
-    const vw = $(window).width();
-
-    // Ajusta el tamaño de la carta y la posición del sobre
-    if (vw < 600) {
-      $('#card').css('transform', 'scale(0.9)');
-      $('.valentines-day').css('transform', 'scale(0.7)');
-    } else if (vw < 992) {
-      $('#card').css('transform', 'scale(1)');
-      $('.valentines-day').css('transform', 'scale(0.8)');
-    } else {
-      $('#card').css('transform', 'scale(1)');
-      $('.valentines-day').css('transform', 'scale(1)');
-    }
   });
 });
