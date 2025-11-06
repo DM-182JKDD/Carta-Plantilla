@@ -14,24 +14,37 @@ body {
 }
 
 /* === CARTA === */
+/* ❌ ERROR ORIGINAL: “##card” → ✅ debe ser “#card” */
 #card {
-  position: fixed;         /* mantiene posición en pantalla */
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* centra perfectamente */
-  height: 60vh;
-  width: 70vw;
-  max-width: 800px;
-  max-height: 550px;
-  margin: 0 auto;
-  display: flex;
+  transform: translate(-50%, -50%);
   visibility: hidden;
-  flex-wrap: wrap;
-  transition: all 0.3s ease;
-  z-index: 10; /* para que quede encima de todo */
+  opacity: 0;
+  width: 80%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+/* Lados de la carta */
+.side {
+  display: none;
+  padding: 20px;
+}
 
+.side.two {
+  display: block;
+}
+
+/* Texto de la carta */
 #card h2 {
   font-size: 2.5em;
   margin: 0;
@@ -45,6 +58,7 @@ body {
   padding: 0 30px;
 }
 
+/* Fondos decorativos */
 .side {
   background: #eee;
   flex: 1 1 45%;
@@ -59,7 +73,7 @@ body {
 }
 
 .side.two {
-  transform: skew(10deg, -15deg);
+  transform: none; /* 👈 Eliminamos el skew para móviles y centrado */
   background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
 }
 
@@ -77,25 +91,25 @@ body {
 }
 
 .envelope:before {
-  content:"";
+  content: "";
   position: absolute;
   width: 230px;
   height: 230px;
   background-color: #c9add4;
   transform: rotate(-45deg);
   border-radius: 0 15px 0 0;
-  left:-30px;
-  top:-70px;
+  left: -30px;
+  top: -70px;
 }
 
 .envelope:after {
-  content:"";
+  content: "";
   position: absolute;
   background-color: #c9add4;
   width: 330px;
   height: 210px;
-  left:-80px;
-  top:40px;
+  left: -80px;
+  top: 40px;
 }
 
 .heart {
@@ -104,59 +118,59 @@ body {
   display: inline-block;
   height: 160px;
   width: 160px;
-  top:50px;
-  left:0;
+  top: 50px;
+  left: 0;
   transform: rotate(-45deg);
   filter: drop-shadow(0 -10px 25px rgba(0,0,0,.3));
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .heart:before, .heart:after {
-  content:"";
+  content: "";
   background-color: #e39be5;
-  border-radius:50%;
+  border-radius: 50%;
   height: 160px;
   width: 160px;
   position: absolute;
 }
 
-.heart:before { top:-90px; left:0; }
-.heart:after { left:90px; top:0; }
+.heart:before { top: -90px; left: 0; }
+.heart:after { left: 90px; top: 0; }
 
 .front {
   position: absolute;
-  width:0;
-  height:0;
+  width: 0;
+  height: 0;
   border-right: 170px solid #fbd2d2;
   border-top: 100px solid transparent;
   border-bottom: 100px solid transparent;
-  top:44px;
-  left:70px;
-  z-index:4;
+  top: 44px;
+  left: 70px;
+  z-index: 4;
 }
 
 .front:before {
-  content:"";
+  content: "";
   position: absolute;
-  width:0;
-  height:0;
+  width: 0;
+  height: 0;
   border-left: 170px solid #fbd2d2;
   border-top: 100px solid transparent;
   border-bottom: 100px solid transparent;
-  top:-100px;
-  left:-155px;
+  top: -100px;
+  left: -155px;
 }
 
 .front:after {
-  width:0;
-  height:0;
+  width: 0;
+  height: 0;
   position: absolute;
-  content:"";
+  content: "";
   border-bottom: 130px solid #fce7e9;
-  border-right:160px solid transparent;
-  border-left:160px solid transparent;
-  top:-36px;
-  left:-150px;
+  border-right: 160px solid transparent;
+  border-left: 160px solid transparent;
+  top: -36px;
+  left: -150px;
 }
 
 .text {
@@ -169,7 +183,7 @@ body {
   top: 80px;
   left: 15px;
   font-size: 1.5rem;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .valentines-day:hover .heart {
